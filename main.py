@@ -13,9 +13,9 @@ df_UserItems=pd.read_parquet("df_UserItems.parquet",columns=columnstouse)
 df_SteamGames=pd.read_parquet("df_SteamGames.parquet",columns=columnsgame)
 df_UserReviews=pd.read_parquet("df_UserReviews.parquet")
 
-df_SteamGames=df_SteamGames.head(7000)
-df_UserItems=df_UserItems.head(7000)
-df_UserReviews=df_UserReviews.head(7000)
+df_SteamGames=df_SteamGames.head(1000)
+df_UserItems=df_UserItems.head(1000)
+df_UserReviews=df_UserReviews.head(1000)
 
 
 app=FastAPI()
@@ -130,8 +130,6 @@ def Usersworstdeveloper(año:int):
         {"Puesto 3": top_3_worst_games.iloc[2]['developer']}
     ]
     return result
-
-
 
 
 
