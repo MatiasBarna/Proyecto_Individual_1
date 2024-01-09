@@ -13,19 +13,18 @@ df_UserItems=pd.read_parquet("df_UserItems.parquet",columns=columnstouse)
 df_SteamGames=pd.read_parquet("df_SteamGames.parquet",columns=columnsgame)
 df_UserReviews=pd.read_parquet("df_UserReviews.parquet")
 
-df_SteamGames=df_SteamGames.head(5000)
-df_UserItems=df_UserItems.head(5000)
-df_UserReviews=df_UserReviews.head(5000)
+df_SteamGames=df_SteamGames.head(7000)
+df_UserItems=df_UserItems.head(7000)
+df_UserReviews=df_UserReviews.head(7000)
 
 
 app=FastAPI()
 
 #http://127.0.0.1:8000
 
-#PRUEBA
-#@app.get('/')
-#def index():
-#    return('Hola Mundo')
+@app.get("/")
+def index():
+    return "Hola, bienvenid@ a mi proyecto"
 
 @app.get('/genero/{genero}')
 def PlayTimeGenre(genero:str):
