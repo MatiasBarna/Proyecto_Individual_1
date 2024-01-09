@@ -1,10 +1,10 @@
 
-fastapi==
-fastparquet==
-nltk==
-numpy==
-pandas==
-pyarrow==
-scikit-learn==
-uvicorn==
+fastapi
+fastparquet
+nltk
+numpy
+pandas
+pyarrow
+scikit-learn
+uvicorn
 
