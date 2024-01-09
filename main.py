@@ -1,17 +1,14 @@
 from fastapi.responses import JSONResponse
 from fastapi import FastAPI
 import pandas as pd
-import uvicorn
-import numpy as np 
-from typing import List
-import logging 
+import numpy as np  
 from sklearn.utils.extmath           import randomized_svd
 from sklearn.metrics.pairwise        import cosine_similarity
 from sklearn.metrics.pairwise        import linear_kernel
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 columnstouse=['item_id','playtime_forever','user_id']
-columnsgame=["name","price","item_id","developer","year","Indie","Action","Casual","Adventure","Strategy","Simulation","RPG","Free to Play","Early Access","Sports","Massively Multiplayer","Racing","Design & Illustration","Utilities"]
+columnsgame=["name","price","item_id","developer","year","Indie","Action","Casual","Adventure","Strategy","Simulation","RPG","Free to Play","Early Access","Sports","Massively Multiplayer","Racing","Design &amp; Illustration","Utilities"]
 df_UserItems=pd.read_parquet("df_UserItems.parquet",columns=columnstouse)
 df_SteamGames=pd.read_parquet("df_SteamGames.parquet",columns=columnsgame)
 df_UserReviews=pd.read_parquet("df_UserReviews.parquet")
