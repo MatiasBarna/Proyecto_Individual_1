@@ -6,15 +6,16 @@ from sklearn.utils.extmath           import randomized_svd
 from sklearn.metrics.pairwise        import cosine_similarity
 from sklearn.metrics.pairwise        import linear_kernel
 from sklearn.feature_extraction.text import TfidfVectorizer
+import json
 
 columnstouse=['item_id','playtime_forever','user_id']
 df_UserItems=pd.read_parquet("df_UserItems.parquet",columns=columnstouse)
 df_SteamGames=pd.read_parquet("df_SteamGames.parquet")
 df_UserReviews=pd.read_parquet("df_UserReviews.parquet")
 
-df_SteamGames=df_SteamGames.head(12000)
-df_UserItems=df_UserItems.head(12000)
-df_UserReviews=df_UserReviews.head(12000)
+df_SteamGames=df_SteamGames.head(18000)
+df_UserItems=df_UserItems.head(18000)
+df_UserReviews=df_UserReviews.head(18000)
 
 
 app=FastAPI()
@@ -79,11 +80,13 @@ def UserForGenre(genero:str):
     # Se retorna el resultado en un formato específico
     result = {"Usuario con más horas jugadas para Género {}".format(genero): max_user, "Horas jugadas": max_user_hours_list}
     return result
+    
 
-@app.get('/top3_juegos_mas_recomendados/{anio}')
-def UsersRecommend(año:int):
+
+@app.get('/top3_juegos_mas_recomendados/{year}')
+def UsersRecommend(year:int):
     # Se filtra el DataFrame resultante para el año específico
-    reduce_df = df_UserReviews[(df_UserReviews['year'] == año) & 
+    reduce_df = df_UserReviews[(df_UserReviews['year'] == year) & 
                                  (df_UserReviews['recommend'] == True) & 
                                  (df_UserReviews['sentiment_analysis'] >= 1)]
     
@@ -99,17 +102,18 @@ def UsersRecommend(año:int):
 
     # Se retorna el resultado
     result = [
-        {"Puesto 1": top_3_worst_games.iloc[0]['name']},
-        {"Puesto 2": top_3_worst_games.iloc[1]['name']},
-        {"Puesto 3": top_3_worst_games.iloc[2]['name']}
+        {"Puesto 1": str(top_3_worst_games.iloc[0]['name'])},
+        {"Puesto 2": str(top_3_worst_games.iloc[1]['name'])},
+        {"Puesto 3": str(top_3_worst_games.iloc[2]['name'])}
     ]
     return result
+    # Serializa la respuesta a JSON
 
 
-@app.get('/top3_menos_recomendadas/{anio}')
-def Usersworstdeveloper(año:int):
+@app.get('/top3_menos_recomendadas/{year}')
+def Usersworstdeveloper(year:int):
     # Se filtra el DataFrame resultante para el año específico
-    reduce_df = df_UserReviews[(df_UserReviews['year'] == año) &
+    reduce_df = df_UserReviews[(df_UserReviews['year'] == year) &
                                  (df_UserReviews['recommend'] == False)  &
                                  (df_UserReviews['sentiment_analysis'] == 0)]
     
@@ -125,12 +129,11 @@ def Usersworstdeveloper(año:int):
 
     # Se retorna el resultado    
     result = [
-        {"Puesto 1": top_3_worst_games.iloc[0]['developer']},
-        {"Puesto 2": top_3_worst_games.iloc[1]['developer']},
-        {"Puesto 3": top_3_worst_games.iloc[2]['developer']}
+        {"Puesto 1": str(top_3_worst_games.iloc[0]['developer'])},
+        {"Puesto 2": str(top_3_worst_games.iloc[1]['developer'])},
+        {"Puesto 3": str(top_3_worst_games.iloc[2]['developer'])}
     ]
     return result
-
 
 
 def convert_numpy_int64(obj):
