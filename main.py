@@ -12,9 +12,9 @@ df_UserItems=pd.read_parquet("df_UserItems.parquet",columns=columnstouse)
 df_SteamGames=pd.read_parquet("df_SteamGames.parquet")
 df_UserReviews=pd.read_parquet("df_UserReviews.parquet")
 
-df_SteamGames=df_SteamGames.head(8000)
-df_UserItems=df_UserItems.head(8000)
-df_UserReviews=df_UserReviews.head(8000)
+df_SteamGames=df_SteamGames.head(12000)
+df_UserItems=df_UserItems.head(12000)
+df_UserReviews=df_UserReviews.head(12000)
 
 
 app=FastAPI()
@@ -25,7 +25,8 @@ app=FastAPI()
 def index():
     return "Hola, bienvenid@ a mi proyecto"
 
-@app.get('/genero/{genero}')
+
+@app.get('/horas_por_genero/{genero}')
 def PlayTimeGenre(genero:str):
     # Se filtra el DataFrame original para obtener solo las columnas relevantes
     game_columns = ['item_id', 'name', 'year', 'Indie', 'Action', 'Casual', 'Adventure', 'Strategy',
