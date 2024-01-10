@@ -8,14 +8,13 @@ from sklearn.metrics.pairwise        import linear_kernel
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 columnstouse=['item_id','playtime_forever','user_id']
-columnsgame=["name","price","item_id","developer","year","Indie","Action","Casual","Adventure","Strategy","Simulation","RPG","Free to Play","Early Access","Sports","Massively Multiplayer","Racing","Design &amp; Illustration","Utilities"]
 df_UserItems=pd.read_parquet("df_UserItems.parquet",columns=columnstouse)
-df_SteamGames=pd.read_parquet("df_SteamGames.parquet",columns=columnsgame)
+df_SteamGames=pd.read_parquet("df_SteamGames.parquet")
 df_UserReviews=pd.read_parquet("df_UserReviews.parquet")
 
-df_SteamGames=df_SteamGames.head(5000)
-df_UserItems=df_UserItems.head(5000)
-df_UserReviews=df_UserReviews.head(5000)
+df_SteamGames=df_SteamGames.head(8000)
+df_UserItems=df_UserItems.head(8000)
+df_UserReviews=df_UserReviews.head(8000)
 
 
 app=FastAPI()
